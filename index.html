@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -229,7 +229,12 @@ footer{background:var(--ink);color:#cabfa9;padding:56px 0 0;margin-top:20px}
 .stock{font-size:13px;color:#3a8a4a;font-weight:500;margin-bottom:20px;display:flex;align-items:center;gap:6px}
 .stock::before{content:"";width:8px;height:8px;border-radius:50%;background:#3a8a4a}
 .modal-desc{font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:22px;border-top:1px solid var(--line);padding-top:20px}
-.modal-desc b{color:var(--ink);display:block;margin-bottom:6px;font-weight:600}
+.modal-desc b{color:var(--ink);display:block;margin-bottom:10px;font-weight:600}
+.desc-list{list-style:none;margin:0 0 6px;padding:0}
+.desc-list li{position:relative;padding-left:20px;margin-bottom:8px;font-size:13.5px;line-height:1.45}
+.desc-list li::before{content:"";position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.sizes-line{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:13.5px}
+.sizes-line span{color:var(--ink);font-weight:600}
 .modal-actions{display:flex;flex-direction:column;gap:12px}
 .act{width:100%;font-size:15px;padding:16px;font-weight:500}
 .act.wa{background:var(--wa);color:#fff;border:none}
@@ -299,8 +304,8 @@ footer{background:var(--ink);color:#cabfa9;padding:56px 0 0;margin-top:20px}
 <!-- ========== TOP BAR ========== -->
 <div class="topbar">
   <div class="wrap">
-    <span>✦ <span class="gold">Nationwide delivery across Kenya</span></span>
-    <span>📍 Based in Eldoret &nbsp;·&nbsp; 📞 <span class="gold">0701 416 501</span></span>
+    <span>✦ <span class="gold">Welcome to Fayz Collection</span></span>
+    <span>📍 Eldoret &nbsp;·&nbsp; 📞 <span class="gold">0701 416 501</span></span>
   </div>
 </div>
 
@@ -456,10 +461,11 @@ footer{background:var(--ink);color:#cabfa9;padding:56px 0 0;margin-top:20px}
       </div>
       <div class="foot-col">
         <h4>Help</h4>
-        <a id="footWaLink2">Order on WhatsApp</a>
+        <a class="help-wa">Order on WhatsApp</a>
         <a id="footDir">Get Directions</a>
-        <a href="#">Delivery Info</a>
-        <a href="#">Returns Policy</a>
+        <a class="help-wa">Delivery Info</a>
+        <a class="help-wa">Returns Policy</a>
+        <a class="help-wa">Ask a Question</a>
       </div>
       <div class="foot-col">
         <h4>Reach us</h4>
@@ -478,7 +484,6 @@ footer{background:var(--ink);color:#cabfa9;padding:56px 0 0;margin-top:20px}
   <span class="wa-pulse"></span>
   <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.5A10 10 0 1012 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.6-4.1-.1-.2-1-1.4-1-2.6 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.3.5c-.1.2-.3.3-.1.6.1.3.7 1.1 1.4 1.7.9.8 1.7 1.1 2 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.3.1.4.2.5.3.1.2.1.6-.1 1z"/></svg></div>
   <span class="lbl">Chat with us</span>
-  <span class="badge">1</span>
 </div>
 
 <!-- ========== PRODUCT MODAL ========== -->
@@ -489,13 +494,16 @@ footer{background:var(--ink);color:#cabfa9;padding:56px 0 0;margin-top:20px}
 <script>
 /* ============ DATA ============ */
 const CATEGORIES = [
-  {id:'all',    label:'All Products', icon:'🛍️'},
-  {id:'women',  label:"Women's Clothing", icon:'👗'},
-  {id:'men',    label:"Men's Clothing", icon:'👔'},
-  {id:'shoes',  label:'Shoes', icon:'👟'},
-  {id:'jackets',label:'Leather Jackets', icon:'🧥'},
-  {id:'hoodies',label:'Hoodies & Sweats', icon:'🎽'},
-  {id:'tees',   label:'T-shirts & Tops', icon:'👕'},
+  {id:'all',      label:'All Products', icon:'🛍️'},
+  {id:'men',      label:'Men', icon:'👔'},
+  {id:'women',    label:'Women', icon:'👗'},
+  {id:'unisex',   label:'Unisex', icon:'🧢'},
+  {id:'shoes',    label:'Shoes', icon:'👟'},
+  {id:'women-shoes', label:'Women Shoes', icon:'👠'},
+  {id:'men-shoes', label:'Men Shoes', icon:'👞'},
+  {id:'boys',     label:'Boys', icon:'👦'},
+  {id:'girls',    label:'Girls', icon:'👧'},
+  {id:'children-shoes', label:'Children Shoes', icon:'👶'},
 ];
 
 const IMG = {
@@ -521,26 +529,26 @@ const IMG = {
 };
 
 const SAMPLE_PRODUCTS = [
-  {id:1, name:"Floral Wrap Maxi Dress", cat:'women', catLabel:"Women's Clothing", price:2499, was:3800, img:IMG.dress1, desc:"Flowing floral maxi with adjustable wrap waist. Soft, breathable fabric perfect for events and daywear.", sizes:"S · M · L · XL"},
-  {id:2, name:"High-Waist Skinny Jeans", cat:'women', catLabel:"Jeans", price:1899, was:2600, img:IMG.jeans, desc:"Stretch-denim skinny jeans with a flattering high waist. Holds shape all day.", sizes:"28–36"},
-  {id:3, name:"Ribbed Crop Top", cat:'tees', catLabel:"Crop Tops", price:799, was:1200, img:IMG.crop, desc:"Soft ribbed crop top that pairs with everything. Layer it or wear it solo.", sizes:"S · M · L"},
-  {id:4, name:"Women's Block-Heel Shoes", cat:'shoes', catLabel:"Women's Shoes", price:2299, was:3400, img:IMG.womShoes, desc:"Comfortable block heels with a cushioned sole. Elegant enough for work or a night out.", sizes:"37–41"},
-  {id:5, name:"Strappy Summer Sandals", cat:'shoes', catLabel:"Sandals", price:1299, was:1900, img:IMG.sandals, desc:"Lightweight strappy sandals with a secure ankle strap. Easy everyday comfort.", sizes:"37–41"},
-  {id:6, name:"Women's Leather Jacket", cat:'jackets', catLabel:"Leather Jackets", price:3499, was:5200, img:IMG.womLeather, desc:"Premium PU leather biker jacket with zip detailing. A statement layer for any season.", sizes:"S · M · L · XL"},
-  {id:7, name:"Tailored Women's Trousers", cat:'women', catLabel:"Trousers", price:1699, was:2400, img:IMG.trouser, desc:"Smart tailored trousers with a clean drape. Office-ready and versatile.", sizes:"28–36"},
-  {id:8, name:"Unisex Pullover Hoodie", cat:'hoodies', catLabel:"Hoodies · Unisex", price:1799, was:2800, img:IMG.hoodie, desc:"Heavyweight fleece-lined hoodie. Cosy, warm and unisex — a wardrobe staple.", sizes:"S · M · L · XL · XXL"},
-  {id:9, name:"Comfort Sweatpants", cat:'hoodies', catLabel:"Sweatpants", price:1299, was:1900, img:IMG.sweatpants, desc:"Relaxed-fit sweatpants with elastic cuffs and drawstring waist. Made for lounging and moving.", sizes:"S · M · L · XL"},
-  {id:10, name:"Men's Slim-Fit Shirt", cat:'men', catLabel:"Men's Shirts", price:1499, was:2200, img:IMG.menShirt, desc:"Crisp slim-fit cotton shirt. Sharp for the office, easy for weekends.", sizes:"M · L · XL · XXL"},
-  {id:11, name:"Men's Cotton T-shirt", cat:'tees', catLabel:"Men's T-shirts", price:799, was:1300, img:IMG.menTee, desc:"Premium combed-cotton tee with a clean fit and soft feel. Everyday essential.", sizes:"M · L · XL · XXL"},
-  {id:12, name:"Men's Casual Shoes", cat:'shoes', catLabel:"Men's Shoes", price:2999, was:4500, img:IMG.menShoes, desc:"Smart-casual leather-look shoes with a durable sole. Dress up or down.", sizes:"40–45"},
-  {id:13, name:"Men's Leather Jacket", cat:'jackets', catLabel:"Leather Jackets", price:3999, was:6000, img:IMG.menLeather, desc:"Classic biker-style PU leather jacket with quilted lining. Rugged and refined.", sizes:"M · L · XL · XXL"},
-  {id:14, name:"Men's Chino Trousers", cat:'men', catLabel:"Men's Trousers", price:1699, was:2500, img:IMG.menTrouser, desc:"Versatile stretch chinos in a modern fit. Pairs with tees or shirts alike.", sizes:"30–38"},
-  {id:15, name:"Men's Vests (3 Pack)", cat:'men', catLabel:"Vests", price:899, was:1400, img:IMG.vest, desc:"Pack of three breathable cotton vests. High-quality everyday innerwear.", sizes:"M · L · XL"},
-  {id:16, name:"Crew-Neck Sweatshirt", cat:'hoodies', catLabel:"Sweatshirts", price:1599, was:2400, img:IMG.sweatshirt, desc:"Soft fleece crew-neck sweatshirt. Warm layering with a clean, minimal look.", sizes:"S · M · L · XL"},
-  {id:17, name:"Bomber Jacket", cat:'jackets', catLabel:"Jackets", price:2799, was:4200, img:IMG.jacket, desc:"Lightweight bomber with ribbed cuffs and zip front. Effortless street style.", sizes:"M · L · XL"},
-  {id:18, name:"Sweat Shorts", cat:'hoodies', catLabel:"Sweat-shorts", price:999, was:1500, img:IMG.shorts, desc:"Comfy knee-length sweat shorts with pockets. Perfect for warm days and workouts.", sizes:"S · M · L · XL"},
-  {id:19, name:"Off-Shoulder Evening Dress", cat:'women', catLabel:"Women's Clothing", price:2899, was:4200, img:IMG.dress2, desc:"Elegant off-shoulder dress with a fitted silhouette. Turn heads at any occasion.", sizes:"S · M · L"},
-  {id:20, name:"Women's Sneaker Shoes", cat:'shoes', catLabel:"Women's Shoes", price:1999, was:3000, img:IMG.womShoes, desc:"Lightweight cushioned sneakers for all-day comfort and style.", sizes:"37–41"},
+  {id:1, name:"Floral Wrap Maxi Dress", cat:'women', catLabel:"Women's Clothing", price:2499, was:3800, img:IMG.dress1, desc:"Flowing floral maxi cut.\nAdjustable wrap waist.\nSoft, breathable fabric.\nPerfect for events or daywear.", sizes:"S · M · L · XL"},
+  {id:2, name:"High-Waist Skinny Jeans", cat:'women', catLabel:"Jeans", price:1899, was:2600, img:IMG.jeans, desc:"Stretch-denim skinny fit.\nFlattering high waist.\nHolds shape all day.", sizes:"28–36"},
+  {id:3, name:"Ribbed Crop Top", cat:'women', catLabel:"Crop Tops", price:799, was:1200, img:IMG.crop, desc:"Soft ribbed knit.\nPairs with everything.\nWear layered or solo.", sizes:"S · M · L"},
+  {id:4, name:"Women's Block-Heel Shoes", cat:'women-shoes', catLabel:"Women's Shoes", price:2299, was:3400, img:IMG.womShoes, desc:"Cushioned block heel.\nComfortable all day.\nWork or evening ready.", sizes:"37–41"},
+  {id:5, name:"Strappy Summer Sandals", cat:'women-shoes', catLabel:"Sandals", price:1299, was:1900, img:IMG.sandals, desc:"Lightweight strappy design.\nSecure ankle strap.\nEasy everyday comfort.", sizes:"37–41"},
+  {id:6, name:"Women's Leather Jacket", cat:'men', catLabel:"Leather Jackets", price:3499, was:5200, img:IMG.womLeather, desc:"Premium PU leather.\nBiker-style zip detailing.\nA statement layer.", sizes:"S · M · L · XL"},
+  {id:7, name:"Tailored Women's Trousers", cat:'women', catLabel:"Trousers", price:1699, was:2400, img:IMG.trouser, desc:"Smart tailored cut.\nClean, elegant drape.\nOffice-ready and versatile.", sizes:"28–36"},
+  {id:8, name:"Unisex Pullover Hoodie", cat:'unisex', catLabel:"Unisex", price:1799, was:2800, img:IMG.hoodie, desc:"Heavyweight fleece-lined build.\nCosy and warm for any weather.\nFits men and women.\nA true wardrobe staple.", sizes:"S · M · L · XL · XXL"},
+  {id:9, name:"Comfort Sweatpants", cat:'unisex', catLabel:"Sweatpants", price:1299, was:1900, img:IMG.sweatpants, desc:"Relaxed comfort fit.\nElastic cuffs, drawstring waist.\nMade for moving and lounging.", sizes:"S · M · L · XL"},
+  {id:10, name:"Men's Slim-Fit Shirt", cat:'men', catLabel:"Men's Shirts", price:1499, was:2200, img:IMG.menShirt, desc:"Crisp slim-fit cotton.\nSharp for the office.\nEasy for weekends.", sizes:"M · L · XL · XXL"},
+  {id:11, name:"Men's Cotton T-shirt", cat:'women', catLabel:"Men's T-shirts", price:799, was:1300, img:IMG.menTee, desc:"Premium combed cotton.\nClean, modern fit.\nSoft everyday feel.", sizes:"M · L · XL · XXL"},
+  {id:12, name:"Men's Casual Shoes", cat:'women-shoes', catLabel:"Men's Shoes", price:2999, was:4500, img:IMG.menShoes, desc:"Smart-casual leather look.\nDurable grip sole.\nDress up or down.", sizes:"40–45"},
+  {id:13, name:"Men's Leather Jacket", cat:'men', catLabel:"Leather Jackets", price:3999, was:6000, img:IMG.menLeather, desc:"Classic biker style.\nQuilted inner lining.\nRugged yet refined.", sizes:"M · L · XL · XXL"},
+  {id:14, name:"Men's Chino Trousers", cat:'men', catLabel:"Men's Trousers", price:1699, was:2500, img:IMG.menTrouser, desc:"Modern stretch chinos.\nVersatile everyday fit.\nPairs with tees or shirts.", sizes:"30–38"},
+  {id:15, name:"Men's Vests (3 Pack)", cat:'men', catLabel:"Vests", price:899, was:1400, img:IMG.vest, desc:"Pack of three vests.\nBreathable cotton.\nHigh-quality innerwear.", sizes:"M · L · XL"},
+  {id:16, name:"Crew-Neck Sweatshirt", cat:'unisex', catLabel:"Sweatshirts", price:1599, was:2400, img:IMG.sweatshirt, desc:"Soft fleece crew neck.\nWarm, clean layering.\nMinimal everyday look.", sizes:"S · M · L · XL"},
+  {id:17, name:"Bomber Jacket", cat:'men', catLabel:"Jackets", price:2799, was:4200, img:IMG.jacket, desc:"Lightweight bomber cut.\nRibbed cuffs, zip front.\nEffortless street style.", sizes:"M · L · XL"},
+  {id:18, name:"Sweat Shorts", cat:'unisex', catLabel:"Sweat-shorts", price:999, was:1500, img:IMG.shorts, desc:"Comfy knee-length shorts.\nHandy side pockets.\nGreat for warm days.", sizes:"S · M · L · XL"},
+  {id:19, name:"Off-Shoulder Evening Dress", cat:'women', catLabel:"Women's Clothing", price:2899, was:4200, img:IMG.dress2, desc:"Elegant off-shoulder cut.\nFitted flattering silhouette.\nTurns heads at any event.", sizes:"S · M · L"},
+  {id:20, name:"Women's Sneaker Shoes", cat:'women-shoes', catLabel:"Women's Shoes", price:1999, was:3000, img:IMG.womShoes, desc:"Lightweight cushioned sole.\nAll-day comfort.\nSporty, versatile style.", sizes:"37–41"},
 ];
 
 // Live products get loaded into this array (from the Google Sheet, or the sample list).
@@ -550,13 +558,29 @@ let PRODUCTS = [];
 // Maps whatever the shop owner types in the sheet's "category" column to a nav category.
 function normaliseCat(raw){
   const s = (raw||'').toString().toLowerCase();
-  if(/jacket|leather|bomber|coat/.test(s)) return {cat:'jackets', label:'Leather Jackets'};
-  if(/shoe|sneaker|sandal|heel|loafer|boot|footwear/.test(s)) return {cat:'shoes', label:'Shoes'};
-  if(/hoodie|sweat|jogger|track/.test(s)) return {cat:'hoodies', label:'Hoodies & Sweats'};
-  if(/t-?shirt|tee|top|crop|polo|vest|shirt/.test(s)) return {cat:'tees', label:'T-shirts & Tops'};
-  // check women BEFORE men, because the word "women" contains "men"
-  if(/wom[ae]n|lady|ladies|female|girl|dress|skirt|jean|trouser|blouse/.test(s)) return {cat:'women', label:"Women's Clothing"};
-  if(/\bmen\b|\bman\b|male|guy|gents/.test(s)) return {cat:'men', label:"Men's Clothing"};
+  // Children/kids first (most specific)
+  if(/kid|child|toddler|baby|infant/.test(s)) {
+    if(/shoe|sneaker|boot|sandal/.test(s)) return {cat:'children-shoes', label:'Children Shoes'};
+    return {cat:'children-shoes', label:'Children Shoes'};
+  }
+  // Boys
+  if(/boy|lad(?!ies)|young.*man/.test(s)) return {cat:'boys', label:'Boys'};
+  // Girls
+  if(/girl|young.*wom|lass/.test(s)) return {cat:'girls', label:'Girls'};
+  // Unisex
+  if(/unisex|both|all gender|neutral/.test(s)) return {cat:'unisex', label:'Unisex'};
+  // Shoes (specific types)
+  if(/shoe|sneaker|sandal|boot|heel|loafer|slipper|footwear/.test(s)){
+    if(/\bmen\b|\bman\b|male|gents|boy/.test(s)) return {cat:'men-shoes', label:'Men Shoes'};
+    if(/wom[ae]n|lady|ladies|female|girl/.test(s)) return {cat:'women-shoes', label:'Women Shoes'};
+    return {cat:'shoes', label:'Shoes'};
+  }
+  // Check women BEFORE men (because "women" contains "men")
+  if(/wom[ae]n|lady|ladies|female|girl|dress|skirt|jean|trouser|blouse/.test(s)) 
+    return {cat:'women', label:'Women'};
+  // Men
+  if(/\bmen\b|\bman\b|male|guy|gents|boy/.test(s)) return {cat:'men', label:'Men'};
+  // Default to women
   return {cat:'women', label: raw || 'New Arrival'};
 }
 
@@ -636,6 +660,17 @@ async function loadProducts(){
 
 /* ============ HELPERS ============ */
 const money = n => "KSh " + n.toLocaleString();
+// Turn a description into short bullet points.
+// Splits on new lines first; if it's one long line, splits on sentences.
+function descToBullets(desc){
+  let parts = (desc||'').split('\n').map(s=>s.trim()).filter(Boolean);
+  if(parts.length<=1){
+    parts = (desc||'').split(/(?<=[.!?])\s+/).map(s=>s.trim()).filter(Boolean);
+  }
+  parts = parts.map(s=>s.replace(/\.$/,''));
+  if(parts.length===0) return '';
+  return '<ul class="desc-list">'+parts.map(p=>`<li>${p}</li>`).join('')+'</ul>';
+}
 function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`; }
 function openWa(text){ window.open(waLink(text), '_blank'); }
 function openDirections(){ window.open(MAPS_URL, '_blank'); }
@@ -718,7 +753,7 @@ function openModal(id){
         <h3>${p.name}</h3>
         <div class="modal-price"><span class="now">${money(p.price)}</span><span class="was">${money(p.was)}</span></div>
         <div class="stock">In stock · ready to ship</div>
-        <div class="modal-desc"><b>Details</b>${p.desc}<br><span style="color:var(--ink);font-weight:500">Sizes:</span> ${p.sizes}</div>
+        <div class="modal-desc"><b>Details</b>${descToBullets(p.desc)}<div class="sizes-line"><span>Sizes:</span> ${p.sizes}</div></div>
         <div class="modal-actions">
           <button class="btn act wa" onclick="orderProduct(${p.id})">
             <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.5A10 10 0 1012 2z"/></svg>
@@ -756,8 +791,12 @@ document.getElementById('heroWa').target = '_blank';
 document.getElementById('promoWa').onclick = ()=> openWa(generalMsg);
 document.getElementById('footWa').href = waLink(generalMsg);
 document.getElementById('footWa').target = '_blank';
-document.getElementById('footWaLink2').onclick = ()=> openWa(generalMsg);
-document.getElementById('footWaLink2').style.cursor='pointer';
+// Every "Help" link opens WhatsApp with a message matching its label
+document.querySelectorAll('.help-wa').forEach(a=>{
+  a.style.cursor='pointer';
+  a.onclick = ()=> openWa(`Hello Fayz Collection! 👋 I need help with: ${a.textContent.trim()}.`);
+});
+// Directions link goes to Google Maps
 document.getElementById('footDir').onclick = openDirections;
 document.getElementById('footDir').style.cursor='pointer';
 
